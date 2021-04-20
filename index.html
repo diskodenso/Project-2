@@ -84,14 +84,37 @@
     <h1>Musicmatch</h1>
     <div>
       <p>Music match is about finding the right tracks for your mix</p>
-      <button type="button" class="btn btn-primary">show more...</button>
-      <p>
+      <p class="hide" id="moreText">
         Music match is about finding the right tracks for your mixMusic match is
         about finding the right tracks for your mixMusic match is about finding
         the right tracks for your mixMusic match is about finding the right
         tracks for your mixMusic match is about finding the right tracks for
         your mixMusic match is about finding the right tracks for your mix
       </p>
+      <button type="button" class="btn btn-primary" id="showMoreButton">
+        show more...
+      </button>
+    </div>
+    <div>
+      <label for="DJ">DJ</label>
+      <input type="radio" name="music relation" id="DJ" />
+      <label for="Listener">Listener</label>
+      <input type="radio" name="music relation" id="Listener" />
+      <label for="Other">Other</label>
+      <input type="radio" name="music relation" id="Other" />
+    </div>
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">artist</th>
+            <th scope="col">genre</th>
+            <th scope="col">genre</th>
+            <th scope="col">style</th>
+          </tr>
+        </thead>
+        <tbody id="my-list"></tbody>
+      </table>
     </div>
     <script src="data.js"></script>
     <script
