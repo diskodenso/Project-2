@@ -5,3 +5,20 @@
 .show {
   display: block;
 }
+
+body {
+  background-color: black !important;
+}
+
+p {
+  color: white !important;
+}
+h1 {
+  color: white !important;
+}
+.navbar {
+  color: black !important;
+}
+.button {
+  color: white !important;
+}

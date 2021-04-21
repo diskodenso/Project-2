@@ -76,12 +76,16 @@ const displayData = (releases) => {
      const td = document.createElement("td")
      const td1 = document.createElement("td")
      const td2 = document.createElement("td")
+     const td3 = document.createElement("td")
      td.innerHTML = value[0];
      tr.appendChild(td);
      td1.innerHTML = value[1];
      tr.appendChild(td1);
      td2.innerHTML = release.genre
      tr.appendChild(td2)
+     td3.innerHTML = release.style
+     tr.appendChild(td3)
      tbody.appendChild(tr);
  });
 }
+
