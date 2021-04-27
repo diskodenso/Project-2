@@ -11,7 +11,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>table</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -86,12 +86,16 @@
     <h1>Musicmatch</h1>
     <div class="button">
       <label for="Electronic">Electronic</label>
-      <input type="checkbox" name="music relation" id="Electronic" />
-      <label for="Listener">Listener</label>
-      <input type="checkbox" name="music relation" id="Listener" />
-      <label for="Other">Other</label>
-      <input type="checkbox" name="music relation" id="Other" />
+      <input type="checkbox" value="Electronic" name="genre" id="Electronic" />
+      <label for="Rock">Rock</label>
+      <input type="checkbox" value="Rock" name="genre" id="Rock" />
+      <label for="Blues">Blues</label>
+      <input type="checkbox" value="Blues" name="genre" id="Blues" />
+      <select name="style" id="style-select">
+        <option value="all">All</option>
+      </select>
     </div>
+    <p id="loading">loading...</p>
     <div class="container">
       <table class="table table-dark table-striped">
         <thead>
