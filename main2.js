@@ -53,6 +53,10 @@ const addEvents = (releases) => {
   let checkboxes = Array.from(
     document.querySelectorAll("input[type=checkbox]")
   );
+  let selectElm = document.getElementById("style-select");
+  selectElm.addEventListener("change", () => {
+    filterData(releases);
+  });
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
       filterData(releases);
@@ -75,14 +79,13 @@ const addEvents = (releases) => {
 // };
 
 const createOptions = (uniqueStyles) => {
-      console.log(uniqueStyles);
+  console.log(uniqueStyles);
   let select = document.getElementById("style-select");
-  let temporary = "";
-    uniqueStyles.forEach((style) => {
-        temporary += `<option value=`${ style } `>${style}</option>`;
-    });
-    console.log(temporary);
-    select.innerHTML = temporary;
+  let temporary = "<option value='all'>All</option>";
+  uniqueStyles.forEach((style) => {
+    temporary += `<option value="${style}">${style}</option>`;
+  });
+  select.innerHTML = temporary;
 };
 const createSelectOptions = (releases) => {
   let styles = releases.map((release) => {
@@ -91,18 +94,14 @@ const createSelectOptions = (releases) => {
   const styles1 = styles.flat();
   console.log(styles1);
 
-
   let uniqueStyles = styles1.filter((style, index) => {
     return styles1.indexOf(style) === index;
   });
   createOptions(uniqueStyles);
 };
 
-
-const createOptions = (styles) => {
-    console.log(styles)
-    //   let temporary = "";
-
+// sort the styles alphabetically
+// impliment the filter when
 //   let select = document.getElementById("style-select");
 //   let temporary = "";
 //   console.log(styles);
@@ -118,23 +117,75 @@ const createOptions = (styles) => {
 const filterData = (releases) => {
   let checkboxes = Array.from(
     document.querySelectorAll("input[type=checkbox]:checked")
-  );
-  console.log("checkboxes", checkboxes);
-  const checkboxesVal = checkboxes.map((checkbox) => {
+  ).map((checkbox) => {
     return checkbox.value;
   });
-  let filteredData = [];
-  if (checkboxesVal.length === 0) {
-    displayData(releases);
-  } else {
-    releases.forEach((release) => {
-      release.genre.forEach((oneGenre) => {
-        if (checkboxesVal.includes(oneGenre)) {
-          filteredData.push(release);
-        }
+
+  let selectElm = document.getElementById("style-select").value;
+  let filtered = releases.filter((release) => {
+    if (checkboxes.length === 0 && selectElm === "all") {
+      return true;
+    } else if (checkboxes.length !== 0 && selectElm === "all") {
+      let result = release.genre.map((oneGenre) => {
+        return checkboxes.includes(oneGenre);
       });
-    });
-    console.log(filteredData);
-    displayData(filteredData);
-  }
+      console.log(result);
+    }
+    // return (
+    //   (checkboxes.length === 0 && selectElm === "all") ||
+    //   (checkboxes.length !== 0 &&
+    //     selectElm === "all" &&
+    //     checkboxes.includes(oneGenre)) ||
+    //   (checkboxes.length === 0 &&
+    //     selectElm !== "all" &&
+    //     selectElm === oneStyle) ||
+    //   (selectElm === oneStyle && checkboxes.includes(oneGenre))
+    // );
+  });
+  console.log(filtered);
+  displayData(filtered);
 };
+
+// if (checkboxes.length === 0 && selectElm === "all") {
+//   filtered = releases;
+// } else if (checkboxes.length !== 0 && selectElm === "all") {
+//   releases.forEach((release) => {
+//     release.genre.forEach((oneGenre) => {
+//       if (checkboxes.includes(oneGenre)) {
+//         filtered.push(release);
+//       }
+//     });
+//   });
+// } else if (checkboxes.length === 0 && selectElm !== "all") {
+//   releases.forEach((release) => {
+//     console.log(release.style);
+//     release.style.forEach((oneStyle) => {
+//       if (selectElm === oneStyle) {
+//         filtered.push(release);
+//       }
+//     });
+//   });
+// } else {
+//   releases.forEach((release) => {
+//     release.genre.forEach((oneGenre) => {
+//       release.style.forEach((oneStyle) => {
+//         if (selectElm === oneStyle && checkboxes.includes(oneGenre)) {
+//           filtered.push(release);
+//         }
+//       });
+//     });
+//   });
+
+//   let filteredData = [];
+//   if (checkboxesVal.length === 0) {
+//     displayData(releases);
+//   } else {
+//     releases.forEach((release) => {
+//       release.genre.forEach((oneGenre) => {
+//         if (checkboxesVal.includes(oneGenre)) {
+//           filteredData.push(release);
+//         }
+//       });
+//     });
+//     console.log(filteredData);
+//     displayData(filteredData);
