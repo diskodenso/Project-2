@@ -27,16 +27,27 @@ const showError = (err) => {
   document.getElementById("error").innerHTML = err;
 };
 
+// create image tag and add source as attribute and append to td
+// for each row create a button
+// for each button add eventlistener
+// give button an id which is related to specific release (id )
 const displayData = (releases) => {
   const tbody = document.getElementById("my-list");
   tbody.innerHTML = " ";
   releases.forEach((release) => {
     const value = release.title.split(" - ");
     const tr = document.createElement("tr");
+    const td4 = document.createElement("td");
+    const imgageElm = document.createElement("img");
+    imgageElm.src = release.cover_image;
+    imgageElm.width = "60";
+    imgageElm.height = "60";
     const td = document.createElement("td");
     const td1 = document.createElement("td");
     const td2 = document.createElement("td");
     const td3 = document.createElement("td");
+    td4.appendChild(imgageElm);
+    tr.appendChild(td4);
     td.innerHTML = value[0];
     tr.appendChild(td);
     td1.innerHTML = value[1];
@@ -48,6 +59,7 @@ const displayData = (releases) => {
     tbody.appendChild(tr);
   });
 };
+// };
 
 const addEvents = (releases) => {
   let checkboxes = Array.from(
@@ -121,61 +133,62 @@ const filterData = (releases) => {
     return checkbox.value;
   });
 
+  // let filtered = releases.filter((release) => {
+  //   if (checkboxes.length === 0 && selectElm === "all") {
+  //     return true;
+  //   } else if (checkboxes.length !== 0 && selectElm === "all") {
+  //     let result = release.genre.map((oneGenre) => {
+  //       return checkboxes.includes(oneGenre);
+  //     });
+  //     console.log(result);
+  //   }
+  // return (
+  //   (checkboxes.length === 0 && selectElm === "all") ||
+  //   (checkboxes.length !== 0 &&
+  //     selectElm === "all" &&
+  //     checkboxes.includes(oneGenre)) ||
+  //   (checkboxes.length === 0 &&
+  //     selectElm !== "all" &&
+  //     selectElm === oneStyle) ||
+  //   (selectElm === oneStyle && checkboxes.includes(oneGenre))
+  // );
+  // });
+  // order by alphabetically -
   let selectElm = document.getElementById("style-select").value;
-  let filtered = releases.filter((release) => {
-    if (checkboxes.length === 0 && selectElm === "all") {
-      return true;
-    } else if (checkboxes.length !== 0 && selectElm === "all") {
-      let result = release.genre.map((oneGenre) => {
-        return checkboxes.includes(oneGenre);
+  let filtered = [];
+  if (checkboxes.length === 0 && selectElm === "all") {
+    filtered = releases;
+  } else if (checkboxes.length !== 0 && selectElm === "all") {
+    releases.forEach((release) => {
+      release.genre.forEach((oneGenre) => {
+        if (checkboxes.includes(oneGenre)) {
+          filtered.push(release);
+        }
       });
-      console.log(result);
-    }
-    // return (
-    //   (checkboxes.length === 0 && selectElm === "all") ||
-    //   (checkboxes.length !== 0 &&
-    //     selectElm === "all" &&
-    //     checkboxes.includes(oneGenre)) ||
-    //   (checkboxes.length === 0 &&
-    //     selectElm !== "all" &&
-    //     selectElm === oneStyle) ||
-    //   (selectElm === oneStyle && checkboxes.includes(oneGenre))
-    // );
-  });
+    });
+  } else if (checkboxes.length === 0 && selectElm !== "all") {
+    releases.forEach((release) => {
+      console.log(release.style);
+      release.style.forEach((oneStyle) => {
+        if (selectElm === oneStyle) {
+          filtered.push(release);
+        }
+      });
+    });
+  } else {
+    releases.forEach((release) => {
+      release.genre.forEach((oneGenre) => {
+        release.style.forEach((oneStyle) => {
+          if (selectElm === oneStyle && checkboxes.includes(oneGenre)) {
+            filtered.push(release);
+          }
+        });
+      });
+    });
+  }
   console.log(filtered);
   displayData(filtered);
 };
-
-// if (checkboxes.length === 0 && selectElm === "all") {
-//   filtered = releases;
-// } else if (checkboxes.length !== 0 && selectElm === "all") {
-//   releases.forEach((release) => {
-//     release.genre.forEach((oneGenre) => {
-//       if (checkboxes.includes(oneGenre)) {
-//         filtered.push(release);
-//       }
-//     });
-//   });
-// } else if (checkboxes.length === 0 && selectElm !== "all") {
-//   releases.forEach((release) => {
-//     console.log(release.style);
-//     release.style.forEach((oneStyle) => {
-//       if (selectElm === oneStyle) {
-//         filtered.push(release);
-//       }
-//     });
-//   });
-// } else {
-//   releases.forEach((release) => {
-//     release.genre.forEach((oneGenre) => {
-//       release.style.forEach((oneStyle) => {
-//         if (selectElm === oneStyle && checkboxes.includes(oneGenre)) {
-//           filtered.push(release);
-//         }
-//       });
-//     });
-//   });
-
 //   let filteredData = [];
 //   if (checkboxesVal.length === 0) {
 //     displayData(releases);
