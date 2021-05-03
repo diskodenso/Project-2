@@ -1,36 +1,36 @@
+// function to fetch the Discogs API (fetch returns a promise (object))
 const fetchMyData = () => {
   fetch(
     "https://api.discogs.com/database/search?token=CAZzhmuKmjlimgcwqBbGmFwXWKwXKpUZZdxBaCBD&type=release&page=200&per_page=50"
   )
+    // catches our promise when its resolved from fetch
     .then((response) => {
       console.log(response);
-      return response.json();
-    })
+      return response.json(); // converting response into a json object
+    }) // catch promise  from first then block
     .then((releases) => {
+      // converted json object
       document.getElementById("loading").style.display = "none";
       //  let myReleases = releases.results
       console.log(releases);
       displayData(releases.results);
       createSelectOptions(releases.results);
       addEvents(releases.results);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
-// .catch((err) => {
-//     console.log(err);
-// });
-if (document.title === "table") {
-  fetchMyData();
-}
+
+// if (document.title === "table") {
+fetchMyData();
+// }
 // console.log(data);
 
 const showError = (err) => {
   document.getElementById("error").innerHTML = err;
 };
 
-// create image tag and add source as attribute and append to td
-// for each row create a button
-// for each button add eventlistener
-// give button an id which is related to specific release (id )
 const displayData = (releases) => {
   const tbody = document.getElementById("my-list");
   tbody.innerHTML = " ";
@@ -63,7 +63,7 @@ const displayData = (releases) => {
 
 const addEvents = (releases) => {
   let checkboxes = Array.from(
-    document.querySelectorAll("input[type=checkbox]")
+    document.querySelectorAll("input[type=checkbox]") // add eventListener to all our checkboxes
   );
   let selectElm = document.getElementById("style-select");
   selectElm.addEventListener("change", () => {
@@ -101,15 +101,17 @@ const createOptions = (uniqueStyles) => {
 };
 const createSelectOptions = (releases) => {
   let styles = releases.map((release) => {
+    // map is a method that performs a loop on an array and safe the results in our styles variable
     return release.style;
   });
-  const styles1 = styles.flat();
+  const styles1 = styles.flat(); // [[1,2,3,4,],[5,6,7,8,]] = bi-dimansonal array which is an array inside an array and we have to loop twice - flat function is transforming our bi-dimansonal array in a one-dimansonal array
   console.log(styles1);
 
   let uniqueStyles = styles1.filter((style, index) => {
+    // searching for dublicates and delete them
     return styles1.indexOf(style) === index;
   });
-  createOptions(uniqueStyles);
+  createOptions(uniqueStyles); // call the function which manipulates the dom and creates HTML options from the array "unique styles"
 };
 
 // sort the styles alphabetically
@@ -128,8 +130,11 @@ const createSelectOptions = (releases) => {
 
 const filterData = (releases) => {
   let checkboxes = Array.from(
-    document.querySelectorAll("input[type=checkbox]:checked")
+    document.querySelectorAll("input[type=checkbox]:checked") // take all checkboxes which are checked and create an array of it
   ).map((checkbox) => {
+    // loop
+    console.log(checkbox);
+    console.log(checkbox.value);
     return checkbox.value;
   });
 
@@ -202,3 +207,5 @@ const filterData = (releases) => {
 //     });
 //     console.log(filteredData);
 //     displayData(filteredData);
+
+// console log the steps you doing understand
